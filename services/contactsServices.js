@@ -1,16 +1,16 @@
-const fs = require("node:fs/promises");
-const path = require("node:path");
-const crypto = require("node:crypto");
+import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { randomUUID } from "node:crypto";
 
-const contactsPath = path.join(__dirname, "./db/contacts.json");
+const contactsPath = join(process.cwd(), "./db/contacts.json");
 
 async function readContacts() {
-  const data = await fs.readFile(contactsPath, { encoding: "utf-8" });
+  const data = await readFile(contactsPath, { encoding: "utf-8" });
   return JSON.parse(data);
 }
 
 function writeContacts(contacts) {
-  return fs.writeFile(contactsPath, JSON.stringify(contacts, undefined, 2));
+  return writeFile(contactsPath, JSON.stringify(contacts, undefined, 2));
 }
 
 async function listContacts() {
@@ -45,8 +45,8 @@ async function addContact(contact) {
   const contacts = await readContacts();
 
   const newContact = {
+    id: randomUUID(),
     ...contact,
-    id: crypto.randomUUID(),
   };
 
   contacts.push(newContact);
@@ -68,7 +68,7 @@ async function updateContact(contactId, contact) {
   return updatedContact;
 }
 
-module.exports = {
+export default {
   listContacts,
   addContact,
   removeContact,
