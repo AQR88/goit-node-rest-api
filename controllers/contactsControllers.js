@@ -1,11 +1,7 @@
 import contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
-import {
-  createContactSchema,
-  updateContactSchema,
-} from "../schemas/contactsSchemas.js";
+
 import ctrlWrapper from "../helpers/controllerWrapper.js";
-import validateBody from "../helpers/validateBody.js";
 
 export const getAllContacts = ctrlWrapper(async (req, res) => {
   const result = await contactsService.listContacts();
@@ -30,19 +26,16 @@ export const deleteContact = ctrlWrapper(async (req, res) => {
   }
 
   res.json({
-    message: "Delete success",
+    message: "Deleted successfully",
   });
 });
 
 export const createContact = ctrlWrapper(async (req, res) => {
-  validateBody(createContactSchema);
   const result = await contactsService.addContact(req.body);
   res.status(201).json(result);
 });
 
 export const updateContact = ctrlWrapper(async (req, res) => {
-  validateBody(updateContactSchema);
-
   const { id } = req.params;
   const result = await contactsService.updateContact(id, req.body);
   if (!result) {
