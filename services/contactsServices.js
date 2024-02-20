@@ -62,7 +62,8 @@ async function updateContact(contactId, contact) {
   if (index === -1) {
     return undefined;
   }
-  const updatedContact = { id: contactId, ...contact };
+  const existingContact = contacts[index];
+  const updatedContact = { id: contactId, ...existingContact, ...contact };
   contacts[index] = updatedContact;
   await writeContacts(contacts);
   return updatedContact;
