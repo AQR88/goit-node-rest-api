@@ -58,5 +58,23 @@
     "name": "Alec Howard",
     "email": "Donec.elementum@scelerisquescelerisquedui.net",
     "phone": "(748) 206-2688"
+  },
+  {
+    "id": "1a3fc5df-f0da-4bc9-851b-270901979704",
+    "name": "Bruce Waine",
+    "email": "waine@gmail.com",
+    "phone": "123456"
+  },
+  {
+    "id": "0aa6ba0e-c8aa-456d-9c43-4c091e754a21",
+    "name": "Joker",
+    "email": "joker@mail.com",
+    "phone": "7777777"
+  },
+  {
+    "id": "d3b8481d-cbdf-4c00-b005-4da97700def5",
+    "name": "Harley Queen",
+    "email": "harley@mail.com",
+    "phone": "7777777"
   }
 ]
