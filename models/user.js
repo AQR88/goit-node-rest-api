@@ -29,6 +29,7 @@ const userSchema = new mongoose.Schema(
   },
   { versionKey: false, timestamps: true }
 );
+
 userSchema.post("save", handleMongooseError);
 
 export const registerSchema = Joi.object({
