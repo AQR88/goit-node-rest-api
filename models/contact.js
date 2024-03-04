@@ -1,5 +1,5 @@
 import Joi from "joi";
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import handleMongooseError from "../helpers/handleMongooseError.js";
 
 const contactSchema = new mongoose.Schema(
@@ -19,6 +19,10 @@ const contactSchema = new mongoose.Schema(
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
   },
   { versionKey: false, timestamps: true }
