@@ -5,9 +5,12 @@ import ctrlWrapper from "../helpers/controllerWrapper.js";
 
 export const getAllContacts = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 20 } = req.query;
+
+  const { page = 1, limit = 10 } = req.query;
+
   const skip = (page - 1) * limit;
-  const result = await Contact.find({ owner }, _, { skip, limit });
+
+  const result = await Contact.find({ owner }, null, { skip, limit });
   res.json(result);
 });
 
@@ -17,7 +20,6 @@ export const getOneContact = ctrlWrapper(async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-
   res.json(result);
 });
 
