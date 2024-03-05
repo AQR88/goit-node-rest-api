@@ -46,3 +46,11 @@ export const logout = ctrlWrapper(async (req, res) => {
   await User.findByIdAndUpdate(_id, { token: "" });
   res.json("Logout success");
 });
+
+export const currentUser = ctrlWrapper(async (req, res) => {
+  const { email, subscription } = req.user;
+  res.json({
+    email,
+    subscription,
+  });
+});

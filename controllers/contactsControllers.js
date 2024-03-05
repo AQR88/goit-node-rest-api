@@ -16,7 +16,11 @@ export const getAllContacts = ctrlWrapper(async (req, res) => {
 
 export const getOneContact = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findById(id);
+
+  const { _id: owner } = req.user;
+
+  const result = await Contact.findById({ _id: id, owner });
+
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -25,7 +29,11 @@ export const getOneContact = ctrlWrapper(async (req, res) => {
 
 export const deleteContact = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndDelete(id);
+
+  const { _id: owner } = req.user;
+
+  const result = await Contact.findByIdAndDelete({ _id: id, owner });
+
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -36,22 +44,35 @@ export const deleteContact = ctrlWrapper(async (req, res) => {
 
 export const createContact = ctrlWrapper(async (req, res) => {
   const { _id: owner } = req.user;
+
   const result = await Contact.create({ ...req.body, owner });
+
   res.status(201).json(result);
 });
 
 export const updateContact = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
-  const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
+
+  const { _id: owner } = req.user;
+
+  const result = await Contact.findByIdAndUpdate({ _id: id, owner }, req.body, {
+    new: true,
+  });
+
   if (!result) {
     throw HttpError(404, "Not found");
   }
   res.json(result);
 });
+
 export const updateStatusContact = ctrlWrapper(async (req, res) => {
   const { id } = req.params;
+
+  const { _id: owner } = req.user;
+
   const result = await Contact.findByIdAndUpdate(
-    id,
+    { _id: id, owner },
+
     { favourite },
     {
       new: true,
