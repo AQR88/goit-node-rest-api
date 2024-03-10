@@ -74,14 +74,10 @@ export const updateAvatar = ctrlWrapper(async (req, res) => {
   await fs.rename(tempUpload, resultUpload);
 
   const avatar = await Jimp.read(resultUpload);
-  await avatar.resize(250, 250).write(resultUpload);
+  avatar.resize(250, 250).write(resultUpload);
 
   const avatarURL = path.join("avatars", fileName);
-  const user = await User.findOneAndUpdate(_id, { avatarURL });
-
-  if (user === null) {
-    return res.status(401).send({ message: "Not authorized" });
-  }
+  await User.findOneAndUpdate(_id, { avatarURL });
 
   res.json({
     avatarURL,
